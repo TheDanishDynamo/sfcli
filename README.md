@@ -4,4 +4,18 @@ A experimental rest client to salesforce (API v 44).
 
 My environment is macos (linux/darwin) with python3 v 3.7.1. It's possible that this will run on other platforms and versions. Cross platform is out of scope, basically you need some OS with Python and a text editor, and internet access, and at some point in the project you need a salesforce instance with admin access, e.g. a free developer instance from www.salesforce.com.
 
+### Finding the latest Salesforce REST api documentation
+... google it, like so https://www.google.com/search?q=salesforce+rest+api
+
+in January 2019 this is what came up:
+
+https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_what_is_rest_api.htm
+
+
+### Files
+sfcli-version-no-auth.py contains python code to get current API versions. The API version list does not require authorization, so this is a minimalistic example of calling API and using the result using python libraries. This requires the name of an instance.
+
+
+
+
 
