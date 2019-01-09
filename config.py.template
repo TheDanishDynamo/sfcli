@@ -1,0 +1,12 @@
+class _Config(object):
+
+    def __init__(self):
+        self.__sf_instance = 'insert your instance name here'
+
+    @property
+    def sf_instance(self):
+        return self.__sf_instance
+
+cfg = _Config()
+
+# Save the file as config.py and delete this comment
