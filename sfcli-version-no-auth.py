@@ -1,5 +1,12 @@
+"""
+Connect to salesforce REST API to get versions e.g.
+         label                   url  version
+0   Winter '11  /services/data/v20.0       20
+24  Winter '19  /services/data/v44.0       44
+"""
+
 import http.client
-from config import cfg # private configuration
+from config import cfg # private configuration, clone config.py.template
 import pandas as pd
 
 host = cfg.sf_instance + ".salesforce.com"
