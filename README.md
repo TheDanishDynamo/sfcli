@@ -13,7 +13,7 @@ https://developer.salesforce.com/docs/atlas.en-us.api_rest.meta/api_rest/intro_w
 
 
 ### Files
-sfcli-version-no-auth.py contains python code to get current API versions. The API version list "method" does not require authorization, so this is a minimalistic example of calling API and using the result using python libraries. This requires the name of an instance. You can also open the api directly in the browser, try this https://myinstance.salesforce.com/services/data/ .. it will not work!! Why? Because you need to replace the "myinstance" part with the part of the address you see when you log in to www.salesforce.com.
+[sfcli-version-no-auth.py](sfcli-version-no-auth.py) contains python code to get current API versions. The API version list "method" does not require authorization, so this is a minimalistic example of calling API and using the result using python libraries. This requires the name of an instance. You can also open the api directly in the browser, try this https://myinstance.salesforce.com/services/data/ .. it will not work!! Why? Because you need to replace the "myinstance" part with the part of the address you see when you log in to www.salesforce.com.
 
 Before you run this on macos you have to do this:
 
@@ -23,7 +23,7 @@ cd /Applications/Python\ 3.7/
 ./Install\ Certificates.command 
 ```
 
-
+[sfcli-auth.py](sfcli-auth.py) contains python code to authenticate. 
 
 
 
