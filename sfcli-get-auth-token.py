@@ -33,24 +33,32 @@ my settings --> personal --> reset my security token.
 
 import http.client
 from config import cfg # private configuration, clone config.py.template
+from requests.utils import requote_uri
 
+# Build Token Request Data
+qs = ""
+qs += "grant_type=password"	  
+qs += "&client_id=" + cfg.sf_api_client_id	  
+qs += "&client_secret=" + cfg.sf_api_client_secret
+qs += "&username=" + cfg.sf_api_username
+qs += "&password=" + cfg.sf_api_password  
+qs += cfg.sf_api_security_token
 
-s = ""
-s += "grant_type=password"	  
-s += "client_id=" + cfg.sf_api_client_id	  
-s += "client_secret=" + cfg.sf_api_client_secret
-s += "username=" + cfg.sf_api_username
-s += "password=" + cfg.sf_api_password  
-s += cfg.sf_api_security_token
-
-# host = cfg.sf_api_instance + "." + cfg.sf_api_host # https://theinstance.salesforce.com
+# host = cfg.sf_api_instance + "." + cfg.sf_api_host # theinstance.salesforce.com
 
 # Set server
-conn = http.client.HTTPSConnection(cfg.sf_api_auth_token_endpoint)
-print('Get Auth Token from ' + cfg.sf_api_auth_token_endpoint)
+host = 'login.salesforce.com'
+conn = http.client.HTTPSConnection(host)
+print('Get Auth Token from ' + host)
 
-# HTTP get data
-conn.request("GET", "/services/data/")
+# HTTP post data
+print('Posting to here ' + host)
+print('Posting this ' + requote_uri(qs))
+#exit()
+
+# Request plus header application/x-www-form-urlencoded
+headers = {"Content-type": "application/x-www-form-urlencoded"}
+conn.request("POST", "/services/oauth2/token", qs, headers)
 response = conn.getresponse()
 
 # HTTP status code
@@ -63,9 +71,9 @@ vjson = response.read()
 print(vjson)
 
 # json to panda dataframe
-vdf = pd.read_json(vjson)
+#vdf = pd.read_json(vjson)
 
 # output table with versions
-print(vdf)
+#print(vdf)
 
 
