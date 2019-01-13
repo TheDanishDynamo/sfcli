@@ -44,15 +44,11 @@ qs += "&username=" + cfg.sf_api_username
 qs += "&password=" + cfg.sf_api_password  
 qs += cfg.sf_api_security_token
 
-# host = cfg.sf_api_instance + "." + cfg.sf_api_host # theinstance.salesforce.com
-
 # Set server
-host = 'login.salesforce.com'
-conn = http.client.HTTPSConnection(host)
-print('Get Auth Token from ' + host)
+conn = http.client.HTTPSConnection(cfg.sf_api_auth_token_host)
 
 # HTTP post data
-print('Posting to here ' + host)
+print('Posting to here ' + cfg.sf_api_auth_token_host)
 print('Posting this ' + requote_uri(qs))
 #exit()
 
