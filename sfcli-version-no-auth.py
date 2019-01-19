@@ -9,11 +9,11 @@ import http.client
 from config import cfg # private configuration, clone config.py.template
 import pandas as pd
 
-host = cfg.sf_instance + ".salesforce.com"
+environment = cfg.sf_api_instance + '.' + cfg.sf_api_host
 
 # Set server
-conn = http.client.HTTPSConnection(host)
-print('Get API Data from ' + host + '/services/data/')
+conn = http.client.HTTPSConnection(environment)
+print('Get API Data from ' + environment + '/services/data/')
 
 # HTTP get data
 conn.request("GET", "/services/data/")

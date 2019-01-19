@@ -1,0 +1,20 @@
+{
+    "totalSize": 2,
+    "done": true,
+    "records": [
+        {
+            "attributes": {
+                "type": "Account",
+                "url": "/services/data/v44.0/sobjects/Account/1"
+            },
+            "Name": "strata"
+        },
+        {
+            "attributes": {
+                "type": "Account",
+                "url": "/services/data/v44.0/sobjects/Account/2"
+            },
+            "Name": "dup1"
+        }
+    ]
+}

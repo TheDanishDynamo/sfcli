@@ -1,4 +1,4 @@
-"""
+'''
 Connect to salesforce REST API to authenticate.
 https://sforce.co/1RDG1os
 Parameter	    Description
@@ -29,19 +29,22 @@ can see consumer key (client_id) and consumer secret (client_secret).
 token
 For the security token you can (login with api username), then get the token via email when you go to 
 my settings --> personal --> reset my security token. 
-"""
+'''
 
 import http.client
 from config import cfg # private configuration, clone config.py.template
 from requests.utils import requote_uri
+import json
+
+# Begin Get Authorization Token ================================================================
 
 # Build Token Request Data
-qs = ""
-qs += "grant_type=password"	  
-qs += "&client_id=" + cfg.sf_api_client_id	  
-qs += "&client_secret=" + cfg.sf_api_client_secret
-qs += "&username=" + cfg.sf_api_username
-qs += "&password=" + cfg.sf_api_password  
+qs = ''
+qs += 'grant_type=password'	  
+qs += '&client_id=' + cfg.sf_api_client_id	  
+qs += '&client_secret=' + cfg.sf_api_client_secret
+qs += '&username=' + cfg.sf_api_username
+qs += '&password=' + cfg.sf_api_password  
 qs += cfg.sf_api_security_token
 
 host = cfg.sf_api_auth_instance + '.' + cfg.sf_api_host
@@ -54,8 +57,10 @@ print('Posting to here ' + host)
 print('Posting this ' + requote_uri(qs))
 
 # Request plus header application/x-www-form-urlencoded
-headers = {"Content-type": "application/x-www-form-urlencoded"}
-conn.request("POST", "/services/oauth2/token", qs, headers)
+headers = {
+    'Content-type': 'application/x-www-form-urlencoded'
+}
+conn.request('POST', '/services/oauth2/token', qs, headers)
 response = conn.getresponse()
 
 # HTTP status code
@@ -65,12 +70,71 @@ print(response.status, response.reason)
 vjson = response.read()
 
 # output raw json with versions
-print(vjson)
+# print(vjson)
+
+# json to dict
+rdict = json.loads(vjson)
+
+# Get the token
+access_token =  rdict['access_token']
+print(access_token)
+
+# Begin Get Accounts ================================================================
+
+# Everything up until now has been authentication, now that a token is obtained
+# the data can be accessed assuming the user has permissions
+
+# Environment is the instance.salecforce.com, e.g. dev instance, sandbox, prod, etc
+environment = cfg.sf_api_instance + '.' + cfg.sf_api_host
+
+# Set salesforceinstance
+conn = http.client.HTTPSConnection(environment)
+
+soqlkv = 'q=SELECT+name+from+Account'
+url = '/services/data/v44.0/query?' + soqlkv
+
+# HTTP post data
+print('Posting to here ' + environment)
+#print('Posting this ' + requote_uri(qs))
+print('Posting this ' + url)
+
+# Request plus header application/x-www-form-urlencoded
+headers = {
+    'Content-type': 'application/x-www-form-urlencoded',
+    'Authorization': 'Bearer ' + access_token,
+    'Accept': 'application/json'
+}
+
+# Sample request with SOQL, curl syntax
+# curl https://yourInstance.salesforce.com/services/data/v20.0/query?q=SELECT+name+from+Account -H 'Authorization: Bearer access_token' -H 'X-PrettyPrint:1'
+
+conn.request('GET', url, None, headers)
+response = conn.getresponse()
+
+# HTTP status code
+print(response.status, response.reason)
+
+# HTTP response body
+account_records_json = response.read()
+
+# output raw json with versions
+# print(account_records_json)
+
+# string to object graph
+account_records = json.loads(account_records_json)
+
+# json to dict using pandas
+import pandas as pd
 
 # json to panda dataframe
-#vdf = pd.read_json(vjson)
+adf = pd.read_json(json.dumps(account_records['records']))
 
 # output table with versions
-#print(vdf)
+# print(adf)
+
+print(adf)
+
+
+
 
 

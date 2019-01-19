@@ -1,0 +1,1 @@
+curl https://yourInstance.salesforce.com/services/data/v20.0/query?q=SELECT+name+from+Account -H "Authorization: Bearer access_token" -H "X-PrettyPrint:1"
