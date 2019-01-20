@@ -8,6 +8,8 @@ Connect to salesforce REST API to get versions e.g.
 import http.client
 from config import cfg # private configuration, clone config.py.template
 import pandas as pd
+import json # Optional. Used for presentation.
+from pprint import pprint # Optional. Used for presentation.
 
 environment = cfg.sf_api_instance + '.' + cfg.sf_api_host
 
@@ -22,13 +24,19 @@ response = conn.getresponse()
 # HTTP status code
 print(response.status, response.reason)
 
-# HTTP response body
+# HTTP response body - raw json string with API versions
 vjson = response.read()
+
+# convert to dictionary with distionaries and tables
+dict_json = json.loads(vjson)
 
 # output raw json with versions
 print(vjson)
 
-# json to panda dataframe
+# Pretty print structured json with endentation
+print(json.dumps(dict_json,indent=2))
+
+# json to panda dataframe, nice column format
 vdf = pd.read_json(vjson)
 
 # output table with versions
