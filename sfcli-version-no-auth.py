@@ -7,7 +7,7 @@ Connect to salesforce REST API to get versions e.g.
 
 import http.client
 from config import cfg # private configuration, clone config.py.template
-import pandas as pd
+import pandas as pd # Optional. Used for presentation.
 import json # Optional. Used for presentation.
 from pprint import pprint # Optional. Used for presentation.
 
