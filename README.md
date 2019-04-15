@@ -24,7 +24,7 @@ cd /Applications/Python\ 3.7/
 ./Install\ Certificates.command 
 ```
 
-[sfcli-auth.py](sfcli-auth.py) contains python code to authenticate. 
+[sfcli-get-auth-token.py](sfcli-get-auth-token.py) contains python code to authenticate. 
 
 
 
